@@ -1,0 +1,10 @@
+{
+  "domain": "saguenay_collection",
+  "name": "Saguenay Collection Schedule",
+  "version": "1.0.0",
+  "documentation": "https://example.com",
+  "dependencies": [],
+  "codeowners": ["@DavidBilodeau1"],
+  "requirements": ["requests"],
+  "config_flow": true
+}
