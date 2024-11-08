@@ -1,0 +1,8 @@
+{
+  "name": "Saguenay Waste Collection Schedule",
+  "render_readme": true,
+  "zip_release": true,
+  "filename": "saguenay_collection.zip",
+  "hide_default_branch": true,
+  "homeassistant": "2024.11.0"
+}
