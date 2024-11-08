@@ -3,6 +3,7 @@
   "name": "Saguenay Collection Schedule",
   "version": "1.0.0",
   "documentation": "https://github.com/DavidBilodeau1/saguenay_collection",
+  "issue_tracker": "https://github.com/DavidBilodeau1/saguenay_collection/issues",
   "dependencies": [],
   "codeowners": ["@DavidBilodeau1"],
   "requirements": ["requests"],
