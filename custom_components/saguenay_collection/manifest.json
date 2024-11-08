@@ -1,7 +1,7 @@
 {
   "domain": "saguenay_collection",
   "name": "Saguenay Collection Schedule",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "documentation": "https://github.com/DavidBilodeau1/saguenay_collection",
   "issue_tracker": "https://github.com/DavidBilodeau1/saguenay_collection/issues",
   "dependencies": [],
