@@ -2,9 +2,11 @@
   "domain": "saguenay_collection",
   "name": "Saguenay Collection Schedule",
   "version": "1.0.0",
-  "documentation": "https://example.com",
+  "documentation": "https://github.com/DavidBilodeau1/saguenay_collection",
   "dependencies": [],
   "codeowners": ["@DavidBilodeau1"],
   "requirements": ["requests"],
-  "config_flow": true
+  "config_flow": true,
+  "iot_class": "cloud_polling",
+  "icon": "custom_components/saguenay_collection/icon.svg"
 }
