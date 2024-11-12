@@ -71,8 +71,8 @@ If you want to contribute to this please read the [Contribution guidelines](CONT
 
 ***
 
-[commits-shield]: https://img.shields.io/github/commit-activity/y/broglep/homeassistant-meshtastic.svg?style=for-the-badge
-[commits]: https://github.com/broglep/homeassistant-meshtastic/commits/main
-[license-shield]: https://img.shields.io/github/license/broglep/homeassistant-meshtastic.svg?style=for-the-badge
-[releases-shield]: https://img.shields.io/github/release/broglep/homeassistant-meshtastic.svg?style=for-the-badge
-[releases]: https://github.com/broglep/homeassistant-meshtastic/releases
+[commits-shield]: https://img.shields.io/github/commit-activity/y/davidbilodeau1/saguenay_collection.svg?style=for-the-badge
+[commits]: https://github.com/DavidBilodeau1/saguenay_collection/commits/main/
+[license-shield]: https://img.shields.io/github/license/davidbilodeau1/saguenay_collection.svg?style=for-the-badge
+[releases-shield]: https://img.shields.io/github/release/davidbilodeau1/saguenay_collection.svg?style=for-the-badge
+[releases]: https://github.com/DavidBilodeau1/saguenay_collection/releases
