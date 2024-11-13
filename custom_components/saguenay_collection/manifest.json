@@ -8,6 +8,5 @@
   "codeowners": ["@DavidBilodeau1"],
   "requirements": ["requests"],
   "config_flow": true,
-  "iot_class": "cloud_polling",
-  "icon": "custom_components/saguenay_collection/icon.svg"
+  "iot_class": "cloud_polling"
 }
