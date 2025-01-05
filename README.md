@@ -46,7 +46,7 @@ To display the next waste collection date as something more user-friendly, I mad
   {% set t = now() %} # compare with now
   {% set midnight = today_at() %}
     # convert sensor value as y-m-d to datetime
-  {% set event_date = as_local(states('sensor.saguenay_recyclage_schedule') | as_datetime('%Y-%m-%d')) %}
+  {% set event_date = as_local(states('sensor.saguenay_rec_schedule') | as_datetime('%Y-%m-%d')) %}
   {% if event_date %}
     {% set delta = (event_date - midnight).days %} # get difference in days
     {% if delta == 0 %}

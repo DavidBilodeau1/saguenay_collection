@@ -19,9 +19,9 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     await coordinator.async_config_entry_first_refresh()
 
     sensors = [
-        CollectionSensor(coordinator, "compostage"),
-        CollectionSensor(coordinator, "ordure"),
-        CollectionSensor(coordinator, "recyclage"),
+        CollectionSensor(coordinator, "COM"),
+        CollectionSensor(coordinator, "ORD"),
+        CollectionSensor(coordinator, "REC"),
     ]
     async_add_entities(sensors)
 
@@ -43,7 +43,7 @@ class CollectionCoordinator(DataUpdateCoordinator):
             results = {}
             for schedule in self.schedules:
                 try:
-                    schedule_type = schedule.get("nom", "Unknown").lower()
+                    schedule_type = schedule.get("acronyme", "Unknown").lower()
                     horaire_id = schedule.get("horaire_id")
 
                     _LOGGER.debug("Fetching data for schedule: %s with horaire_id: %s", schedule_type, horaire_id)
