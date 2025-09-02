@@ -69,7 +69,7 @@ class SaguenayCollectionConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     @staticmethod
     def _fetch_streets(city_id, civic_number):
         response = requests.post(
-            f"{BASE_URL}/getrues",
+            f"{BASE_URL}/rues",
             data={"no_civique": civic_number, "no_ville": city_id},
             timeout=15,
         )
@@ -79,7 +79,7 @@ class SaguenayCollectionConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     @staticmethod
     def _fetch_schedule_ids(street_id):
         response = requests.post(
-            f"{BASE_URL}/getcollecteinfo",
+            f"{BASE_URL}/collecteinfos",
             data={"ide": street_id},
             timeout=15,
         )

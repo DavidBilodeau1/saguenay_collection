@@ -48,7 +48,7 @@ class CollectionCoordinator(DataUpdateCoordinator):
 
                     _LOGGER.debug("Fetching data for schedule: %s with horaire_id: %s", schedule_type, horaire_id)
                     response = requests.post(
-                        f"{BASE_URL}/getcedule",
+                        f"{BASE_URL}/cedule",
                         data={"horaire_id": horaire_id},
                         timeout=15,
                     )
