@@ -43,7 +43,7 @@ class CollectionCoordinator(DataUpdateCoordinator):
             results = {}
             for schedule in self.schedules:
                 try:
-                    schedule_type = schedule.get("nom", "Unknown").lower()
+                    schedule_type = schedule.get("type_collecte", "Unknown").lower()
                     horaire_id = schedule.get("horaire_id")
 
                     _LOGGER.debug("Fetching data for schedule: %s with horaire_id: %s", schedule_type, horaire_id)
