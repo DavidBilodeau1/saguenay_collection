@@ -79,8 +79,8 @@ class SaguenayCollectionConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     @staticmethod
     def _fetch_schedule_ids(street_id):
         response = requests.post(
-            f"{BASE_URL}/collecteinfos",
-            data={"ide": street_id},
+            f"{BASE_URL}/collectesinfos",
+            data={"cle_batiment": street_id},
             timeout=15,
         )
         response.raise_for_status()
@@ -98,7 +98,7 @@ class SaguenayCollectionConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return vol.Schema(
             {
                 vol.Required("street"): vol.In(
-                    {street["id"]: street["value"] for street in self.streets}
+                    {street["id"]: street["toponymie"]["rue_complete_min"] for street in self.streets}
                 )
             }
         )
