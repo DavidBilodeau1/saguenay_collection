@@ -42,8 +42,8 @@ class CollectionCoordinator(DataUpdateCoordinator):
         def fetch_data():
             results = {}
             for schedule in self.schedules:
+                schedule_type = schedule.get("type_collecte", "Unknown").lower()
                 try:
-                    schedule_type = schedule.get("type_collecte", "Unknown").lower()
                     horaire_id = schedule.get("horaire_id")
 
                     _LOGGER.debug("Fetching data for schedule: %s with horaire_id: %s", schedule_type, horaire_id)
@@ -54,12 +54,42 @@ class CollectionCoordinator(DataUpdateCoordinator):
                     )
                     response.raise_for_status()
                     data = response.json()
+
+                    # Validate that data is not None and contains the expected key
+                    if data is None:
+                        _LOGGER.warning("Received None response for %s, keeping previous data if available", schedule_type)
+                        # Keep previous data if it exists
+                        if self.data and schedule_type in self.data:
+                            results[schedule_type] = self.data[schedule_type]
+                        continue
+
+                    if "date_collecte" not in data:
+                        _LOGGER.warning("Response for %s missing 'date_collecte' key, keeping previous data if available. Response: %s", schedule_type, data)
+                        # Keep previous data if it exists
+                        if self.data and schedule_type in self.data:
+                            results[schedule_type] = self.data[schedule_type]
+                        continue
+
                     results[schedule_type] = data["date_collecte"]
+                    _LOGGER.debug("Successfully fetched data for %s: %s", schedule_type, data["date_collecte"])
+
                 except requests.exceptions.RequestException as e:
-                    _LOGGER.error("Error fetching data for %s: %s", schedule_type, e)
+                    _LOGGER.error("Error fetching data for %s: %s. Keeping previous data if available.", schedule_type, e)
+                    # Keep previous data if it exists
+                    if self.data and schedule_type in self.data:
+                        results[schedule_type] = self.data[schedule_type]
                 except ValueError as e:
-                    _LOGGER.error("Error parsing JSON for %s: %s", schedule_type, e)
-            _LOGGER.debug(results)
+                    _LOGGER.error("Error parsing JSON for %s: %s. Keeping previous data if available.", schedule_type, e)
+                    # Keep previous data if it exists
+                    if self.data and schedule_type in self.data:
+                        results[schedule_type] = self.data[schedule_type]
+                except (KeyError, TypeError) as e:
+                    _LOGGER.error("Unexpected data structure for %s: %s. Keeping previous data if available.", schedule_type, e)
+                    # Keep previous data if it exists
+                    if self.data and schedule_type in self.data:
+                        results[schedule_type] = self.data[schedule_type]
+
+            _LOGGER.debug("Final results: %s", results)
             return results
 
         return await self.hass.async_add_executor_job(fetch_data)
