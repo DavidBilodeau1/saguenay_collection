@@ -39,9 +39,27 @@ class CollectionCoordinator(DataUpdateCoordinator):
     async def _async_update_data(self):
         _LOGGER.debug("Fetching collection schedule for street ID %s", self.street_id)
 
+        def fetch_schedules():
+            """Fetch the current schedule IDs, which change between summer and winter."""
+            try:
+                response = requests.post(
+                    f"{BASE_URL}/collectesinfos",
+                    data={"cle_batiment": self.street_id},
+                    timeout=15,
+                )
+                response.raise_for_status()
+                schedules = response.json()
+                if isinstance(schedules, list) and schedules:
+                    self.schedules = schedules
+                else:
+                    _LOGGER.warning("Unexpected collectesinfos response, using last known schedules: %s", schedules)
+            except (requests.exceptions.RequestException, ValueError) as e:
+                _LOGGER.error("Error refreshing schedules, using last known schedules: %s", e)
+            return self.schedules
+
         def fetch_data():
             results = {}
-            for schedule in self.schedules:
+            for schedule in fetch_schedules():
                 try:
                     schedule_type = schedule.get("type_collecte", "Unknown").lower()
                     horaire_id = schedule.get("horaire_id")
@@ -54,6 +72,10 @@ class CollectionCoordinator(DataUpdateCoordinator):
                     )
                     response.raise_for_status()
                     data = response.json()
+                    # An inactive seasonal schedule returns null
+                    if not isinstance(data, dict) or not data.get("date_collecte"):
+                        _LOGGER.warning("No collection date for %s (horaire_id %s): %s", schedule_type, horaire_id, data)
+                        continue
                     results[schedule_type] = data["date_collecte"]
                 except requests.exceptions.RequestException as e:
                     _LOGGER.error("Error fetching data for %s: %s", schedule_type, e)
@@ -78,7 +100,7 @@ class CollectionSensor(CoordinatorEntity, SensorEntity):
     @property
     def state(self):
         """Return the state of the sensor."""
-        return self.coordinator.data.get(self._collection_type, "No data available")
+        return self.coordinator.data.get(self._collection_type)
 
     @property
     def unique_id(self):
